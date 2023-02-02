@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Slf4j
 public class StatsController {
-    StatsServerService serverService;
+    private final StatsServerService serverService;
 
     @PostMapping("/hit")
     public Hit hit(@RequestBody HitRequestDto dto) {

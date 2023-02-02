@@ -8,8 +8,8 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class HitRequestDto {
-    String app;
-    String uri;
-    String ip;
-    String timestamp;
+    private String app;
+    private String uri;
+    private String ip;
+    private String timestamp;
 }

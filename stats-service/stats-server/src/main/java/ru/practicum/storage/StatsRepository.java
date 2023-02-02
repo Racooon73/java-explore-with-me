@@ -11,7 +11,6 @@ public interface StatsRepository extends JpaRepository<Hit, Long> {
     List<Hit> findDistinctByUriInAndTimestampAfterAndTimestampBefore(List<String> uris, LocalDateTime start,
                                                                      LocalDateTime end);
 
-
     Long countDistinctByUri(String uri);
 
     Long countByUri(String uri);

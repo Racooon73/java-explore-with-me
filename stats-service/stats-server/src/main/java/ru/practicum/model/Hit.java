@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 public class Hit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String app;
-    String uri;
-    String ip;
+    private long id;
+    private String app;
+    private String uri;
+    private String ip;
     @Column(name = "time_stamp")
-    LocalDateTime timestamp;
+    private LocalDateTime timestamp;
 }

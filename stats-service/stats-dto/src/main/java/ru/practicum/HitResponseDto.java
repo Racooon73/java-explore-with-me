@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 public class HitResponseDto {
-    String app;
-    String uri;
-    long hits;
+    private String app;
+    private String uri;
+    private long hits;
 }

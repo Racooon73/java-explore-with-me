@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class StatsServerServiceImpl implements StatsServerService {
 
-    final StatsRepository statsRepository;
+    private final StatsRepository statsRepository;
 
     @Override
     public Hit hit(HitRequestDto dto) {

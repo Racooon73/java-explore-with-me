@@ -1,10 +1,10 @@
 package ru.practicum.util;
 
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import ru.practicum.HitResponseDto;
 import ru.practicum.model.Hit;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 public class HitMapper {
     public static HitResponseDto fromHitToHitResponse(Hit hit, long hits) {
 

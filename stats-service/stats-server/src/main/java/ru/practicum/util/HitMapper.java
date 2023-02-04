@@ -1,10 +1,11 @@
 package ru.practicum.util;
 
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.practicum.HitResponseDto;
 import ru.practicum.model.Hit;
 
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HitMapper {
     public static HitResponseDto fromHitToHitResponse(Hit hit, long hits) {
 

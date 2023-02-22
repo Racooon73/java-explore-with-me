@@ -24,6 +24,7 @@ public class StatsServerServiceImpl implements StatsServerService {
     public Hit hit(HitRequestDto dto) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime timestamp = LocalDateTime.parse(dto.getTimestamp(), formatter);
+
         return statsRepository.save(Hit.builder()
                 .app(dto.getApp())
                 .uri(dto.getUri())

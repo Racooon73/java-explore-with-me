@@ -22,13 +22,13 @@ import java.util.List;
 @Slf4j
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/users/{userId}")
 public class PrivateController {
 
     private final EventService eventService;
     private final ParticipationService participationService;
 
-    @GetMapping("/{userId}/events")
+    @GetMapping("/events")
     public List<EventShortDto> getEvents(@PathVariable long userId,
                                          @RequestParam(defaultValue = "0") int from,
                                          @RequestParam(defaultValue = "10") int size,
@@ -37,7 +37,7 @@ public class PrivateController {
         return eventService.getEvents(userId, from, size);
     }
 
-    @PostMapping("/{userId}/events")
+    @PostMapping("/events")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto postEvent(@PathVariable long userId,
                                   @RequestBody @Valid NewEventDto eventDto) {
@@ -45,7 +45,7 @@ public class PrivateController {
         return eventService.postEvent(userId, eventDto);
     }
 
-    @GetMapping("/{userId}/events/{eventId}")
+    @GetMapping("/events/{eventId}")
     public EventFullDto getEvent(@PathVariable long userId,
                                  @PathVariable long eventId,
                                  HttpServletRequest request) {
@@ -53,7 +53,7 @@ public class PrivateController {
         return eventService.getEvent(userId, eventId);
     }
 
-    @PatchMapping("/{userId}/events/{eventId}")
+    @PatchMapping("/events/{eventId}")
     public EventFullDto patchEvent(@RequestBody UpdateEventUserRequest event,
                                    @PathVariable long userId,
                                    @PathVariable long eventId) {
@@ -61,14 +61,14 @@ public class PrivateController {
         return eventService.patchEvent(event, userId, eventId);
     }
 
-    @GetMapping("/{userId}/events/{eventId}/requests")
+    @GetMapping("/events/{eventId}/requests")
     public List<Participation> getEventReq(@PathVariable long userId,
                                            @PathVariable long eventId) throws BadRequestException {
         log.info("GET /users/" + userId + "/events/" + eventId + "/requests");
         return participationService.getEventReq(userId, eventId);
     }
 
-    @PatchMapping("/{userId}/events/{eventId}/requests")
+    @PatchMapping("/events/{eventId}/requests")
     public EventRequestStatusUpdateResult patchEventReq(@RequestBody EventRequestStatusUpdateRequest request,
                                                         @PathVariable long userId,
                                                         @PathVariable long eventId) {
@@ -76,13 +76,13 @@ public class PrivateController {
         return eventService.patchEventReq(request, userId, eventId);
     }
 
-    @GetMapping("/{userId}/requests")
+    @GetMapping("/requests")
     public List<Participation> getEventReqByUser(@PathVariable long userId) {
         log.info("GET /users/" + userId + "/requests");
         return participationService.getEventReqByUser(userId);
     }
 
-    @PostMapping("/{userId}/requests")
+    @PostMapping("/requests")
     @ResponseStatus(HttpStatus.CREATED)
     public Participation postEventReqByUser(@PathVariable long userId,
                                             @RequestParam long eventId) {
@@ -90,7 +90,7 @@ public class PrivateController {
         return participationService.postEventReqByUser(userId, eventId);
     }
 
-    @PatchMapping("/{userId}/requests/{requestId}/cancel")
+    @PatchMapping("/requests/{requestId}/cancel")
     public Participation cancelEventReqByUser(@PathVariable long userId,
                                               @PathVariable long requestId) {
         log.info("GET /users/" + userId + "/requests/" + requestId + "/cancel");

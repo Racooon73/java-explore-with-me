@@ -1,6 +1,6 @@
 package ru.practicum.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class AdminController {
 
@@ -50,7 +50,7 @@ public class AdminController {
 
     @PatchMapping("/categories/{catId}")
     public Category patchCategory(@PathVariable long catId,
-                                  @RequestBody @Valid Category category) {
+                                  @RequestBody @Valid NewCategoryDto category) {
         log.info("PATCH /admin/categories/" + catId);
         return categoryService.patchCategory(catId, category);
     }

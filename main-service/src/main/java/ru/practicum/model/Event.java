@@ -52,7 +52,7 @@ public class Event {
     private Integer participantLimit;
     @JsonFormat
     private Boolean requestModeration;
-    @Column(length = 2048)
+    @Column(length = 256)
     @JsonFormat
     private String title;
 }

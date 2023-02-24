@@ -14,12 +14,12 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "participations")
 public class Participation {
-    private LocalDateTime created;
-    @Column(name = "event_id")
-    private long event;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private LocalDateTime created;
+    @Column(name = "event_id")
+    private long event;
     @Column(name = "requester_id")
     private long requester;
     private ParticipationStatus status;

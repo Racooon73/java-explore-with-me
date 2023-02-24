@@ -20,9 +20,9 @@ import java.util.List;
 @AllArgsConstructor
 public class ParticipationServiceImpl implements ParticipationService {
 
-    ParticipationRepository participationRepository;
-    UserRepository userRepository;
-    EventRepository eventRepository;
+    private final ParticipationRepository participationRepository;
+    private final UserRepository userRepository;
+    private final EventRepository eventRepository;
 
     @Override
     public List<Participation> getEventReq(long userId, long eventId) throws BadRequestException {

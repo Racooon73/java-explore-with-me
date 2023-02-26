@@ -1,17 +1,17 @@
 package ru.practicum.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.exception.BadRequestException;
+import ru.practicum.model.Comment;
 import ru.practicum.model.Participation;
-import ru.practicum.model.dto.EventFullDto;
-import ru.practicum.model.dto.EventShortDto;
-import ru.practicum.model.dto.NewEventDto;
+import ru.practicum.model.dto.*;
 import ru.practicum.model.requests.EventRequestStatusUpdateRequest;
 import ru.practicum.model.requests.EventRequestStatusUpdateResult;
 import ru.practicum.model.requests.UpdateEventUserRequest;
+import ru.practicum.service.CommentService;
 import ru.practicum.service.EventService;
 import ru.practicum.service.ParticipationService;
 
@@ -21,12 +21,13 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/users/{userId}")
 public class PrivateController {
 
     private final EventService eventService;
     private final ParticipationService participationService;
+    private final CommentService commentService;
 
     @GetMapping("/events")
     public List<EventShortDto> getEvents(@PathVariable long userId,
@@ -95,6 +96,39 @@ public class PrivateController {
                                               @PathVariable long requestId) {
         log.info("GET /users/" + userId + "/requests/" + requestId + "/cancel");
         return participationService.cancelEventReqByUser(userId, requestId);
+    }
+
+    @PostMapping("/comments")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Comment postComment(@PathVariable long userId,
+                               @RequestParam long eventId,
+                               @RequestBody @Valid CommentDto dto) {
+        log.info("POST /users/" + userId + "/comments");
+        return commentService.postComment(userId, eventId, dto);
+    }
+
+    @PatchMapping("/comments/{comId}")
+    public Comment patchComment(@PathVariable long userId,
+                                @PathVariable long comId,
+                                @RequestBody @Valid PatchCommentDto dto) {
+        log.info("PATCH /users/" + userId + "/comments/" + comId);
+        return commentService.patchComment(userId, comId, dto);
+    }
+
+    @GetMapping("/comments")
+    public List<Comment> getCommentsByCurrentUser(@PathVariable long userId,
+                                                  @RequestParam(defaultValue = "0") int from,
+                                                  @RequestParam(defaultValue = "10") int size) {
+        log.info("PATCH /users/" + userId + "/comments");
+        return commentService.getCommentsByCurrentUser(userId, from, size);
+    }
+
+    @DeleteMapping("/comments/{comId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteComment(@PathVariable long userId,
+                              @PathVariable long comId) {
+        log.info("DELETE /users/" + userId + "/comments/" + comId);
+        commentService.deleteComment(userId, comId);
     }
 
 }

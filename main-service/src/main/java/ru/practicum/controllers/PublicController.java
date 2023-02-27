@@ -88,14 +88,12 @@ public class PublicController {
                                             @RequestParam(defaultValue = "0") int from,
                                             @RequestParam(defaultValue = "10") int size) {
         log.info("GET /events/" + eventId + "/comments");
-
         return commentService.getCommentsByEvent(eventId, from, size);
     }
 
     @GetMapping("/comments/{comId}")
     public Comment getCommentById(@PathVariable long comId) {
         log.info("GET /comments/" + comId);
-
         return commentService.getCommentById(comId);
     }
 

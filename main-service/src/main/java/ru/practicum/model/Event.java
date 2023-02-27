@@ -19,12 +19,9 @@ import java.time.LocalDateTime;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonFormat
     private long id;
     @Column(length = 2048)
-    @JsonFormat
     private String annotation;
-    @JsonFormat
     private Long category;
     @Column(length = 2048)
     private String description;
@@ -38,21 +35,13 @@ public class Event {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "published_on")
     private LocalDateTime publishedOn;
-    @JsonFormat
     private EventState state;
-    @JsonFormat
     private long initiator;
-    @JsonFormat
     private float lat;
-    @JsonFormat
     private float lon;
-    @JsonFormat
     private Boolean paid;
-    @JsonFormat
     private Integer participantLimit;
-    @JsonFormat
     private Boolean requestModeration;
     @Column(length = 256)
-    @JsonFormat
     private String title;
 }

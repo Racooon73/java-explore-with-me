@@ -1,6 +1,6 @@
 package ru.practicum.controllers;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.StatsClient;
 import ru.practicum.model.Category;
+import ru.practicum.model.Comment;
 import ru.practicum.model.dto.CompilationDto;
 import ru.practicum.model.dto.EventFullDto;
 import ru.practicum.model.dto.EventShortDto;
 import ru.practicum.model.enums.FilterEnum;
 import ru.practicum.service.CategoryService;
+import ru.practicum.service.CommentService;
 import ru.practicum.service.CompilationService;
 import ru.practicum.service.EventService;
 
@@ -21,13 +23,14 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class PublicController {
 
     private final StatsClient statsClient;
     private final CategoryService categoryService;
     private final CompilationService compilationService;
     private final EventService eventService;
+    private final CommentService commentService;
 
     @GetMapping("/compilations")
     public List<CompilationDto> getCompilations(@RequestParam(required = false) boolean pinned,
@@ -69,7 +72,7 @@ public class PublicController {
                                          HttpServletRequest request) {
         log.info("GET /events");
         statsClient.hit(request);
-        return eventService.getEventsPublic(text,categories,paid,rangeEnd,rangeStart,onlyAvailable,sort,from,size);
+        return eventService.getEventsPublic(text, categories, paid, rangeEnd, rangeStart, onlyAvailable, sort, from, size);
     }
 
     @GetMapping("/events/{id}")
@@ -78,6 +81,20 @@ public class PublicController {
         log.info("GET /events" + id);
         statsClient.hit(request);
         return eventService.getEventPuplic(id);
+    }
+
+    @GetMapping("/events/{eventId}/comments")
+    public List<Comment> getCommentsByEvent(@PathVariable long eventId,
+                                            @RequestParam(defaultValue = "0") int from,
+                                            @RequestParam(defaultValue = "10") int size) {
+        log.info("GET /events/" + eventId + "/comments");
+        return commentService.getCommentsByEvent(eventId, from, size);
+    }
+
+    @GetMapping("/comments/{comId}")
+    public Comment getCommentById(@PathVariable long comId) {
+        log.info("GET /comments/" + comId);
+        return commentService.getCommentById(comId);
     }
 
 }

@@ -5,19 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.model.Category;
+import ru.practicum.model.Comment;
 import ru.practicum.model.User;
-import ru.practicum.model.dto.CompilationDto;
-import ru.practicum.model.dto.EventFullDto;
-import ru.practicum.model.dto.NewCategoryDto;
-import ru.practicum.model.dto.NewCompilationDto;
+import ru.practicum.model.dto.*;
 import ru.practicum.model.enums.EventState;
 import ru.practicum.model.requests.NewUserRequest;
 import ru.practicum.model.requests.UpdateCompilationRequest;
 import ru.practicum.model.requests.UpdateEventAdminRequest;
-import ru.practicum.service.CategoryService;
-import ru.practicum.service.CompilationService;
-import ru.practicum.service.EventService;
-import ru.practicum.service.UserService;
+import ru.practicum.service.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -33,6 +28,7 @@ public class AdminController {
     private final CategoryService categoryService;
     private final CompilationService compilationService;
     private final EventService eventService;
+    private final CommentService commentService;
 
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
@@ -117,5 +113,19 @@ public class AdminController {
                                    @PathVariable long eventId) {
         log.info("GET /admin/events/" + eventId);
         return eventService.patchEventAdmin(event, eventId);
+    }
+
+    @PatchMapping("/comments/{comId}")
+    public Comment patchCommentAdmin(@PathVariable long comId,
+                                     @RequestBody @Valid PatchCommentDto dto) {
+        log.info("PATCH /admin/comments/" + comId);
+        return commentService.patchCommentAdmin(comId, dto);
+    }
+
+    @DeleteMapping("/comments/{comId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCommentAdmin(@PathVariable long comId) {
+        log.info("DELETE /admin/comments/" + comId);
+        commentService.deleteCommentAdmin(comId);
     }
 }
